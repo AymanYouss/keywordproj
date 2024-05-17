@@ -6,7 +6,7 @@ function fetchTrends() {
 }
 
 function makeRequest(keyword, retries = 3, delay = 1000) {
-    const baseUrl = window.location.hostname === "localhost" ? "http://localhost:3000" : "https://your-deployment-url.com";
+    const baseUrl = window.location.hostname === "localhost" ? "http://localhost:3000" : "https://https://keywordproj.vercel.app";
     fetch(`${baseUrl}/trends?keyword=${keyword}`)
         .then(response => {
             if (!response.ok) {
