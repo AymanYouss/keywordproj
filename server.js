@@ -8,9 +8,16 @@ app.use(express.json());
 
 app.get('/trends', (req, res) => {
     const keyword = req.query.keyword;
+    console.log(`Received request for keyword: ${keyword}`); // Log received keyword
     googleTrends.interestOverTime({ keyword: keyword })
-        .then(response => res.send(response))
-        .catch(error => res.status(500).send(error));
+        .then(response => {
+            console.log(`Sending response for keyword: ${keyword}`); // Log successful response
+            res.send(response);
+        })
+        .catch(error => {
+            console.error(`Error fetching trends for keyword: ${keyword}`, error); // Log errors
+            res.status(500).send(error);
+        });
 });
 
 const PORT = 3000;
