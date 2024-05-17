@@ -6,7 +6,8 @@ function fetchTrends() {
 }
 
 function makeRequest(keyword, retries = 3, delay = 1000) {
-    fetch(`http://localhost:3000/trends?keyword=${keyword}`)
+    const baseUrl = window.location.hostname === "localhost" ? "http://localhost:3000" : "https://your-deployment-url.com";
+    fetch(`${baseUrl}/trends?keyword=${keyword}`)
         .then(response => {
             if (!response.ok) {
                 if (retries > 0) {
