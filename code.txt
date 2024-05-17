@@ -1,0 +1,18 @@
+// function fetchTrends() {
+//     const keyword = document.getElementById('keyword').value;
+//     fetch(`http://localhost:3000/trends?keyword=${keyword}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             const results = document.getElementById('results');
+//             results.innerHTML = ''; // Clear previous results
+//             const table = document.createElement('table');
+//             table.innerHTML = '<tr><th>Date</th><th>Value</th></tr>';
+//             data.default.timelineData.forEach(item => {
+//                 const row = table.insertRow(-1);
+//                 row.insertCell(0).textContent = item.formattedAxisTime;
+//                 row.insertCell(1).textContent = item.formattedValue[0];
+//             });
+//             results.appendChild(table);
+//         })
+//         .catch(error => console.error('Error:', error));
+// }

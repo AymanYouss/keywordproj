@@ -1,0 +1,57 @@
+
+let trendChart; // Define chart outside of function to maintain its state
+
+function fetchTrends() {
+    const keyword = document.getElementById('keyword').value;
+    fetch(`http://localhost:3000/trends?keyword=${keyword}`)
+    .then(response => {
+        if (!response.ok) {
+            if(response.status === 429) {
+                
+                throw new Error('Too many requests - please try again later.');
+            }
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(data => {
+            const labels = data.default.timelineData.map(item => item.formattedAxisTime);
+            const values = data.default.timelineData.map(item => item.value[0]);
+
+            const ctx = document.getElementById('chart').getContext('2d');
+            
+            // Check if chart instance exists, destroy if it does
+            if (trendChart) {
+                trendChart.destroy();
+            }
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Trend over Time',
+                        data: values,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    // fetch(`http://localhost:3000/trends?keyword=${keyword}`)
+    // .then(response => response.text())  // Change here to text to see the raw response
+    // .then(data => {
+    //     console.log(data);  // Check the console to see what's returned
+    // })
+    // .catch(error => console.error('Error:', error));
+}
+
